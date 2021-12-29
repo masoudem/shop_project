@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     phone_regex = RegexValidator(regex=r'/^(\+98?)?{?(0?9[0-9]{9,9}}?)$/gm', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
-    USERNAME_FIELD = 'email' or 'phone_number'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
