@@ -1,0 +1,91 @@
+{% extends "layout.html" %} {% block body %} {% load crispy_forms_tags %} 
+
+{% if post %}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-12 offset-md-3">
+    <!-- Post Content Column -->
+    <div class="col-lg-8 mb-lg-3 sketchy rounded">
+      <!-- Title -->
+
+      <h2 class="mt-4">{{post.title}}</h2>
+
+      <!-- Author -->
+      <p class="lead text-justify text-lowercase">{{post.bodytext}}</p>
+
+      <hr />
+      <p>Category: {{post.category.last}}</p>
+      <hr />
+      <!-- Date/Time -->
+      <p>{{post.post_date}}</p>
+      <hr />
+      <!-- Preview Image -->
+      <img class="img-fluid rounded" src="{{post.image.url}}" alt="" />
+
+      {% if request.user.is_authenticated %}
+      <div class="container">
+        <div class="col-md-12 my-3">
+          <a class="btn btn-primary" href="{% url 'update_post' post.slug %}">
+            بروزرسانی
+          </a>
+          <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}">
+            حذف
+          </a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<div class="row justify-content-center">
+  <div class="col-md-12 offset-md-3">
+    <div class="col-md-8 sketchy rounded">
+      <p>نظرات</p>
+      {% for comment in post.comments.all %}
+      <div class="row m-3">
+        <div class="col-md-3">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ55cZHiXzj7vMwyZEQG8ccH6-TO3R1tI6SiWgVEMsJsCWfPEj26tdhbXL9cXxY6ETy8I8&usqp=CAU"
+            alt="..."
+            width="130"
+            class="rounded mb-2 img-thumbnail"
+          />
+          <p>@{{comment.name}}</p>
+        </div>
+        <div class="col-md-9 bg-light p-3">
+          <p>{{comment.body}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+  {% if request.user.is_authenticated %}
+  <div class="row justify-content-center">
+    <div class="col-md-12 offset-md-3">
+      <div class="col-md-8 sketchy rounded mt-1">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group row">
+            <div class="col-md-6">{{form.name}}</div>
+            <div class="col-md-6">{{form.email}}</div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12 form-group">
+              {{form.body}}
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-10">
+              <input type="submit" value="ثبت کامنت" class="btn btn-primary">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endif %} 
+  {% endif %}
+  {% endblock body %}
+

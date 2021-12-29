@@ -1,0 +1,74 @@
+{% extends "layout.html" %} {% block body %}
+
+<div class="row">
+  <div class="col-md-9 mx-auto justify-content-center mt-2">
+    <!-- Profile widget -->
+    <div class="bg-white shadow rounded overflow-hidden">
+      <div class="px-4 pt-0 pb-4 cover">
+        <div class="media align-items-end profile-head">
+          <div class="profile mr-3 mb-3">
+            {% if avatar.avatar %}
+            <img
+              src="{{ avatar.avatar.url }}"
+              alt="..."
+              width="130"
+              class="rounded mb-2 img-thumbnail"
+            />
+            {% else %}
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ55cZHiXzj7vMwyZEQG8ccH6-TO3R1tI6SiWgVEMsJsCWfPEj26tdhbXL9cXxY6ETy8I8&usqp=CAU"
+              alt="..."
+              width="130"
+              class="rounded mb-2 img-thumbnail"
+            />
+            {% endif %}
+            <a href="http://127.0.0.1:8000/post/avatar" class="btn btn-outline-dark btn-sm btn-block"
+              >Edit profile</a
+            >
+          </div>
+          <div class="media-body mb-5 text-white">
+            <h4 class="mt-0 mb-0">{{user_info.username}}</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 py-3 mt-5">
+        <h5 class="mb-0">درباره ی من:</h5>
+        <div class="p-4 rounded shadow-sm bg-light">
+          <p class="font-italic mb-0">نام کاربری: {{user_info.username}}</p>
+          <p class="font-italic mb-0">ایمیل: {{user_info.email}}</p>
+        </div>
+      </div>
+      <div class="py-4 px-4">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="mb-0">پست ها</h5>
+          <a href="{% url 'create_post' %}" class="btn btn-link btn-outline-dark text-muted"
+            style="text-decoration: none;">اضافه کردن پست جدید +</a
+          >
+        </div>
+        {% if posts %} {% for post in posts %}
+        <div class="row justify-content-center">
+          <div class="col-md-10 offset-md-3">
+            <!-- Post Content Column -->
+            <div class="col-lg-8 border-3 border-dark mb-lg-3 sketchy">
+              <!-- Title -->
+
+              <h2 class="mt-4">{{post.title}}</h2>
+
+              <!-- Author -->
+              <p class="lead">{{post.post_date}}</p>
+              <img class="img-fluid rounded" src="{{post.image.url}}" alt="" />
+              <a href="{% url 'post_detail' post.slug %}">
+                <input type="button" value="Detail" class="btn btn-danger" />
+              </a>
+              <!-- Preview Image -->
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

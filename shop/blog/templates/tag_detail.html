@@ -1,0 +1,30 @@
+{% extends "layout.html" %} 
+{% block body %}
+
+<div class="list-group">
+    {% for post in tag.all %}
+    <div class="row justify-content-center">
+        <div class="col-md-10 offset-md-3">
+          <!-- Post Content Column -->
+          <div class="col-lg-8 border-3 border-dark mb-lg-3 sketchy">
+            <!-- Title -->
+            
+            <h2 class="mt-4">{{post.title}}</h2>
+      
+            <!-- Author -->
+            <p class="lead">{{post.post_date}}</p>
+            {% for tagg in post.tag.all %}
+              <p class="lead">tag: #{{ tagg.tag_name }}</p>
+            {% endfor %}
+            <img class="img-fluid rounded" src="{{post.image.url}}" alt="">
+            <a href="{% url 'post_detail' post.slug %}">
+              <input type="button" value="Detail" class="btn btn-danger">
+            </a>
+            <!-- Preview Image -->
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+{% endblock body %}

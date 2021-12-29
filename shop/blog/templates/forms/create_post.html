@@ -1,0 +1,42 @@
+{% extends "layout.html" %} {% block body %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12 offset-md-3">
+      <div class="col-md-8 sketchy mt-3 rounded">
+      <h3> ایجاد پست جدید</h3>
+      <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{form.media}}
+        <div class="form-group row">
+          <div class="col-md-6">عنوان پست: {{form.title}}</div>
+          <div class="col-md-6">خلاصه پست: {{form.description}}</div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6 form-group">
+            برچسب: {{form.tag}}
+          </div>
+          <div class="col-md-6 form-group">
+            دسته بندی:‌ {{form.category}}
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12 form-group">
+             انتخاب تصویر: {{form.image}}
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12 form-group">
+            {{form.bodytext}}
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-10">
+            <input type="submit" value="ذخیره" class="btn btn-primary">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

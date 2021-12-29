@@ -1,0 +1,14 @@
+{% extends "layout.html" %} 
+{% block body %}
+<!-- {% load crispy_forms_tags %} -->
+
+
+{% if messages %}
+  <ul class="messages text-center" style="list-style-type: none;">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% endblock body %}
