@@ -7,7 +7,7 @@ from django.utils.html import format_html
 class PersonAdmin(admin.ModelAdmin):
     date_hierarchy = 'post_date'
     list_display = ("title", "owner")
-    
+    list_filter = ("title",)
     fieldsets = (
         (None, {
             'fields': (('title', 'description'),'bodytext' , 'image', 'owner')
