@@ -4,13 +4,13 @@ from .models import Product, Tag, Category, Basket, BasketItem, Shop
 
 @admin.register(Shop)
 class PersonAdmin(admin.ModelAdmin):
-    radio_fields = {"shop_status": admin.VERTICAL}
     list_display = ("shop_name","shop_status","shop_type","owner")
+    list_editable = ("shop_status",)
     list_filter = ("shop_status",)
     search_fields = ['shop_name']
     actions = ['make_published']
 
-    @admin.action(description='Mark selected stories as published')
+    @admin.action(description='Mark selected shops as active')
     def make_published(self, request, queryset):
         queryset.update(shop_status='act')
 
