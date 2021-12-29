@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Product, Tag, Category, Basket, BasketItem, Shop
+from django.utils.html import format_html
 
 
 @admin.register(Shop)
@@ -30,9 +31,16 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ("product_name","product_unit","price_per_unit")
+    
+    def image_tag(self, obj):
+        return format_html('<img src="{}" width="100" height="100"/>'.format(obj.image.url))
+    
+    list_display = ("product_name","product_unit","price_per_unit","image_tag")
     list_filter = ("product_name",)
     search_fields = ['product_name']
+    image_tag.short_description = 'Image'
+    
+    
 
 
 @admin.register(Tag)
