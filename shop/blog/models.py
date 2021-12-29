@@ -2,12 +2,12 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.utils.crypto import get_random_string
 from django.utils.text import slugify
-from django.contrib.auth.models import User
+from market_user.models import CustomUser
 
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=CASCADE, primary_key=True)
+    user = models.OneToOneField(CustomUser, on_delete=CASCADE, primary_key=True)
     avatar = models.FileField(null=True,blank=True)
 
     def __str__(self):
@@ -25,7 +25,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=200, verbose_name=("title"))
+    title = models.CharField(max_length=72, verbose_name=("title"))
     slug = models.SlugField(unique=True, max_length=100, allow_unicode=True)
     description = models.CharField(max_length=255, blank=True,null=True)
     bodytext = models.TextField(verbose_name=("message"))
@@ -33,7 +33,7 @@ class Post(models.Model):
     category = models.ManyToManyField('Category', verbose_name='category of this post')
     tag = models.ManyToManyField('Tag', blank=True)
     post_date = models.DateTimeField(verbose_name="post date", auto_now_add=True, blank=True)
-    owner = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='post owner', blank=True, null=True)
+    owner = models.ForeignKey(CustomUser,on_delete=models.CASCADE,verbose_name='post owner', blank=True, null=True)
 
 
     class Meta:
