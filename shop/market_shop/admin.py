@@ -5,7 +5,11 @@ from django.utils.html import format_html
 
 @admin.register(Shop)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ("shop_name","shop_status","shop_type","owner")
+    def image_tag(self, obj):
+        return format_html('<img src="{}" width="90" height="90"/>'.format(obj.image.url))
+    
+    list_display = ("shop_name","shop_status","shop_type","owner", "image_tag")
+    image_tag.short_description = 'Image'
     list_editable = ("shop_status",)
     list_filter = ("shop_status",)
     search_fields = ['shop_name']
@@ -33,7 +37,7 @@ class PersonAdmin(admin.ModelAdmin):
 class PersonAdmin(admin.ModelAdmin):
     
     def image_tag(self, obj):
-        return format_html('<img src="{}" width="100" height="100"/>'.format(obj.image.url))
+        return format_html('<img src="{}" width="90" height="90"/>'.format(obj.image.url))
     
     list_display = ("product_name","product_unit","price_per_unit","image_tag")
     list_filter = ("product_name",)
