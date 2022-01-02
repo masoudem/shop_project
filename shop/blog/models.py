@@ -46,7 +46,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title + '12345678')
             if Post.objects.filter(slug = self.slug):
                 the_slug = get_random_string(8,'0123456789')
                 self.slug = slugify(self.title + the_slug)

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView,ListView,DetailView
 from .forms import *
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from market_user.models import CustomUser
 from django.contrib.auth.views import LogoutView
 from django.template.defaultfilters import slugify, time
 from django.db.models import Q
@@ -77,11 +77,12 @@ def myRegister(request):
     form = UserFormModel(None or request.POST)
     if request.method == "POST":
         if form.is_valid():
-            user = User.objects.create_user(form.cleaned_data['username'],form.cleaned_data['email'],form.cleaned_data['password'])
+            user = CustomUser.objects.create_user(phone_number=form.cleaned_data['phone_number'],email=form.cleaned_data['email'],password=form.cleaned_data['password'])
             print('new user register is :',user)
             return redirect(reverse('login'))
     
     return render(request,'forms/register.html',{'form':form})
+
 
 def update_post(request, slug):
     context ={}
@@ -186,7 +187,7 @@ def create_tag(request):
 @login_required(login_url='/post/login')
 def dashboard(request):
     if  request.user.is_authenticated :
-        user_info = User.objects.get(pk = request.user.id)
+        user_info = CustomUser.objects.get(pk = request.user.id)
         posts = Post.objects.filter(owner__id = request.user.id).all()
         
         avatar = UserProfile.objects.filter(user__id = request.user.id).reverse()
@@ -203,6 +204,9 @@ def create_post(request):
         post.slug = slugify(post.title)
         post.owner = request.user
         post.save()
+        print(post.slug)
+        print('----------------------------------------------')
+
         return redirect(reverse('dashboard'))
     context['form'] = form
     return render(request, 'forms/create_post.html', context)

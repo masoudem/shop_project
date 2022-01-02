@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Post, Category, Comment, Tag, UserProfile
-from .forms import PostForm
 from django.utils.html import format_html
 
 
@@ -12,10 +11,10 @@ class PersonAdmin(admin.ModelAdmin):
     search_fields = ['title']
     fieldsets = (
         (None, {
-            'fields': (('title', 'description'), 'bodytext', 'image', 'owner')
+            'fields': (('title', 'slug'), 'description', 'bodytext', 'image', 'owner')
         }),
 
-        ('maktab sharif', {
+        ('tag category', {
             'classes': ('collapse',),
             'fields': ('tag', 'category'),
         }),

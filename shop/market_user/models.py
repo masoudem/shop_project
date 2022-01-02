@@ -7,10 +7,10 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(('email address'), unique=True)
-    phone_regex = RegexValidator(regex=r'/^(\+98?)?{?(0?9[0-9]{9,9}}?)$/gm', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+    phone_number = models.CharField(validators=[RegexValidator(regex=r'^(\+98?)?{?(0?9[0-9]{9,9}}?)$',message='Hashtag doesnt comply'),], max_length=14, blank=True)
+    user_type_owner_shop = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['phone_number']
 
     objects = CustomUserManager()
 

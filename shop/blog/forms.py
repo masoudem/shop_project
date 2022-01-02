@@ -1,5 +1,7 @@
 from django import forms
 from django.forms import fields
+
+from market_user.models import CustomUser
 from .models import  Comment, Post, Tag,Category, UserProfile
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -57,10 +59,10 @@ class LoginForm(forms.Form):
 
 class UserFormModel(forms.ModelForm):
     class Meta : 
-        model = User
-        fields = ['username','email','password']
+        model = CustomUser
+        fields = ['phone_number','email','password']
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'نام و نام خانوادگی'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'نام و نام خانوادگی'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder':'ایمیل'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'رمز کاربر'}),
         }
