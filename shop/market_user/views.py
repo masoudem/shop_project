@@ -1,3 +1,4 @@
+from django.db import models
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, reverse
 from django.shortcuts import render
@@ -9,14 +10,15 @@ from .models import CustomUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
- 
+
+
 class SignUpView(CreateView):
     template_name = 'market_user_forms/signup.html'
     form_class = SignUpForm
     success_message = "Your profile was created successfully"
-    
+
     success_url = '/user/signin/'
-    
+
     # def post(self, request, *args, **kwargs):
     #     print('post is post')
     #     return redirect('posts')
@@ -29,8 +31,7 @@ class SignUpView(CreateView):
 #     template_name = 'market_user_forms/signin.html'
 #     form_class = SignInForm
 #     success_url ="/post/posts"
-    
-    
+
     # def get_success_url(self):
     #     return reverse_lazy('posts')
     # def get(self, request, *args, **kwargs):
@@ -48,6 +49,7 @@ class SignUpView(CreateView):
 
 
 def sign_in(request):
+
     form = SignInForm(request.POST or None)
     context = {
         "form": form
@@ -55,19 +57,20 @@ def sign_in(request):
     if request.user.is_authenticated:
         return redirect('posts')
     if form.is_valid():
-        email  = form.cleaned_data.get("email_login")
-        password  = form.cleaned_data.get("password")
+        email = form.cleaned_data.get("email_login")
+        password = form.cleaned_data.get("password")
         user = authenticate(request, email=email, password=password)
+        user_type = CustomUser.objects.get(email=user).user_type_owner_shop
         
         if user is not None:
-            print(user)
-            login(request,user)
+            login(request, user)
+            if user_type:
+                return redirect('panel')
             messages.success(request, 'وارد شدید!')
             return redirect(reverse('posts'))
-        else :
+        else:
             messages.success(request, 'your password is not correct!')
     return render(request, "market_user_forms/signin.html", context)
-    
 
 
 # def signup(request):
