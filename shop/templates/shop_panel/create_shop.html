@@ -1,0 +1,7 @@
+{% extends 'layout_shop.html' %} {% block body %}
+
+<form enctype='multipart/form-data' method="post">{% csrf_token %} {{form.media}} {{form}}
+    <input class="btn btn-primary" type="submit" value="ثبت فروشگاه">
+</form>
+
+{% endblock body %}

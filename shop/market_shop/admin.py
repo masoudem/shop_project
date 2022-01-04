@@ -6,8 +6,10 @@ from django.utils.html import format_html
 @admin.register(Shop)
 class PersonAdmin(admin.ModelAdmin):
     def image_tag(self, obj):
-        return format_html('<img src="{}" width="90" height="90"/>'.format(obj.image.url))
-    
+        if obj.image:
+            return format_html('<img src="{}" width="90" height="90"/>'.format(obj.image.url))
+        else:
+            return "image not found"
     list_display = ("shop_name","shop_status","shop_type","owner", "image_tag")
     image_tag.short_description = 'Image'
     list_editable = ("shop_status",)

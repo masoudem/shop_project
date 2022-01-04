@@ -1,0 +1,13 @@
+{% extends 'layout_shop.html' %} {% block body %}
+
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <form method="post">{% csrf_token %}
+            <input type="submit" value="حذف">
+        </form>
+    </div>
+</div>
+
+{% endblock body %}

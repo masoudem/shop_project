@@ -1,0 +1,24 @@
+{% extends 'layout_shop.html' %} {% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            {% for shop in shop_list %}
+            <div class="row">
+                <div class="col-md-12">
+                    {{shop.shop_name}}
+                    {{shop.pk}}
+                </div>
+            </div>
+            <a href="{% url 'update_shop' shop.pk %}">
+                <input type="button" value="بروزرسانی">
+            </a>
+            <a href="{% url 'delete_shop' shop.pk %}">
+                <input type="button" value="حذف">
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

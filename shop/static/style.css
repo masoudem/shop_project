@@ -1,3 +1,4 @@
+
 .profile-head {
   transform: translateY(5rem);
 }
@@ -17,7 +18,7 @@ body {
   direction: rtl;
 }
 
-body.users{  
+body.users {
   background: url(https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80);
   background-position: center;
   background-repeat: no-repeat;
@@ -187,32 +188,32 @@ body.users{
 }
 
 .sign_up {
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 1.1rem;
   padding: 10px;
-  background-color: rgb(242, 242, 242,0.2);
+  background-color: rgb(242, 242, 242, 0.2);
 }
 
-input.form_control{
+input.form_control {
   width: 90%;
   min-height: 35px;
   padding: 4px;
   margin-right: 4px;
   overflow: auto;
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.4rem;
 }
-
-
 
 #id_user_type_owner_shop {
   align-items: flex-start;
   min-height: 20px;
-  background-color: rgb(242, 242, 242,0.6);
+  background-color: rgb(242, 242, 242, 0.6);
   border: none;
 }
 
-.sign_up button{
+.sign_up button {
   min-height: 35px;
   width: 100%;
 }
+
+
