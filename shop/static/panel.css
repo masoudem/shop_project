@@ -12,6 +12,7 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     direction: rtl;
+    margin-right:78px
   }
 .sidebar {
   position: fixed;
@@ -22,7 +23,7 @@ body {
   background: #11101d;
   padding: 6px 14px;
   z-index: 99;
-  transition: all 0.5s ease;
+  /* transition: all 0.5s ease; */
 }
 .sidebar.open {
   width: 250px;
@@ -238,3 +239,48 @@ body {
     display: none;
   }
 }
+
+
+.sign_up {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1.1rem;
+  padding: 10px;
+  background-color: rgb(242, 242, 242, 0.2);
+}
+
+input.form_control {
+  width: 90%;
+  min-height: 35px;
+  padding: 4px;
+  margin-right: 4px;
+  overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.4rem;
+}
+
+.containerf {
+  display: flex;
+  margin-top: 10px;
+  margin-right: 20px;
+  flex-flow: row wrap;
+  align-items: stretch;
+  align-content: space-between;
+}
+
+.item {
+  flex: 1;
+  margin: 10px 0 ;
+}
+
+.item img{
+  height: 200px;
+}
+
+.item card {
+  background-color: rgb(242, 242, 242, 0.2);
+  background-color: black;
+}
+
+
+
+

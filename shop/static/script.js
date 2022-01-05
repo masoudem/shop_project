@@ -16,8 +16,10 @@ searchBtn.addEventListener("click", () => {
 // following are the code to change sidebar button(optional)
 function menuBtnChange() {
   if (sidebar.classList.contains("open")) {
-    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+    document.body.style.marginRight = "250px";
   } else {
-    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+    document.body.style.marginRight = '78px';
   }
 }

@@ -41,20 +41,20 @@
       href="https://cdn.imgbin.com/21/24/15/imgbin-coffee-tea-espresso-cafe-transparent-coffee-s-brown-and-black-coffee-cup-illustration-EYbdMcgjqfwNWVqBuGzNAC4wW.jpg"
     />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{% static '/panel.css' %}?2018120" />
+    <link rel="stylesheet" href="{% static '/panel.css' %}?20181540" />
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
-
     <title>کافکا</title>
   </head>
+  {% include 'includes/navbar_panel.html' %}
   <body>
     <div class="row bg-light p-3 justify-content-center" >
       <h3>کافکا</h3>
       <br>
       <p>فروشگاه اینترنتی کتاب</p>
     </div>
-    {% include 'includes/navbar_panel.html' %}
+    
     {% block body %} {% endblock body %} 
     
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
@@ -65,7 +65,7 @@
     ></script>
     <script src="{% static 'js/bootstrap.min.js'%}"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-    <script src="{% static '/script.js' %}?20181209"></script>
+    <script src="{% static '/script.js' %}?2018120"></script>
 
   </body>
 </html>

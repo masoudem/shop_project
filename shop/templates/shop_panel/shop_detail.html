@@ -1,7 +1,7 @@
 {% extends 'layout_shop.html' %} {% block body %}
 
 <div class="containerf">
-  {% for shop in shop_list %}
+  
   <div class="item">
     <div class="card" style="width: 18rem">
       <img
@@ -12,14 +12,14 @@
       <div class="card-body">
         <p class="card-text">{{shop.shop_name}}</p>
       </div>
-      
-      <a href="{% url 'shop-detail' shop.pk %}">
-        <input type="button" value="بیشتر" />
+      <a href="{% url 'update_shop' shop.pk %}">
+        <input type="button" value="بروزرسانی" />
       </a>
-
+      <a href="{% url 'delete_shop' shop.pk %}">
+        <input type="button" value="حذف" />
+      </a>
     </div>
   </div>
-  {% endfor %}
 </div>
 
 {% endblock body %}

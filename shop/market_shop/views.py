@@ -13,6 +13,8 @@ from django.contrib import messages
 from .access import ActiveOnlyMixin
 
 
+
+# shop
 class PanelView(ActiveOnlyMixin, TemplateView):
     template_name = 'shop_panel/panel.html'
 
@@ -45,19 +47,20 @@ class ShopListView(ActiveOnlyMixin, ListView):
     template_name = 'shop_panel/shop_list.html'
     paginate_by = 100
 
-    # def get(self, request, *args, **kwargs):
-    #     shop = Shop.objects.filter(owner__email = request.user)
-    #     print(shop)
-    #     return (shop)
     def get_queryset(self):
         shop = Shop.objects.filter(
             owner__email=self.request.user).filter(shop_status='act')
         return shop
+    
+    
+class ShopDetailView(ActiveOnlyMixin, DeleteView):
+    model = Shop
+    template_name = 'shop_panel/shop_detail.html'
 
 
 class UpdateShop(ActiveOnlyMixin, UpdateView):
     model = Shop
-    fields = '__all__'
+    form_class = ShopForm
     template_name = 'shop_panel/update_shop.html'
     success_url = '/shop/shop_list/'
 
@@ -81,3 +84,6 @@ class DeleteShop(ActiveOnlyMixin, UpdateView):
         shop = form.save(commit=False)
         shop.shop_status = 'del'
         return super(DeleteShop, self).form_valid(form)
+
+
+#product
