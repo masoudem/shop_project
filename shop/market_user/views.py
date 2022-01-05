@@ -60,14 +60,12 @@ def sign_in(request):
         email = form.cleaned_data.get("email_login")
         password = form.cleaned_data.get("password")
         user = authenticate(request, email=email, password=password)
-        user_type = CustomUser.objects.get(email=user).user_type_owner_shop
         
         if user is not None:
             login(request, user)
-            if user_type:
-                return redirect('panel')
+            
             messages.success(request, 'وارد شدید!')
-            return redirect(reverse('posts'))
+            return redirect(reverse('panel'))
         else:
             messages.success(request, 'your password is not correct!')
     return render(request, "market_user_forms/signin.html", context)
