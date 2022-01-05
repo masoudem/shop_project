@@ -45,7 +45,7 @@ class CreateShop(ActiveOnlyMixin, CreateView):
 class ShopListView(ActiveOnlyMixin, ListView):
     model = Shop
     template_name = 'shop_panel/shop_list.html'
-    paginate_by = 100
+    paginate_by = 4
 
     def get_queryset(self):
         shop = Shop.objects.filter(
