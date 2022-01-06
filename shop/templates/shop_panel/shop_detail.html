@@ -18,6 +18,15 @@
       <a href="{% url 'delete_shop' shop.pk %}">
         <input type="button" value="حذف" />
       </a>
+      <a href="{% url 'create_category' %}">
+        <input type="button" value="ایجاد دسته بندی" />
+      </a>
+      <a href="{% url 'create_tag' %}">
+        <input type="button" value="ایجاد برچسب" />
+      </a>
+      <h4>اضافه کردن محصول جدید</h4>
+      <a href="{% url 'create_product' shop.pk %}" class="text-dark"><input type="button" value="ایجاد محصول" /></i></a>
+      <a href="{% url 'basket-list' shop.pk %}" class="text-dark"><input type="button" value="سبد خریدها" /></i></a>
     </div>
   </div>
 </div>

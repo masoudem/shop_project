@@ -3,10 +3,11 @@ from django.shortcuts import redirect, reverse
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic import ListView
-from .forms import ShopForm
+from django.views.generic import ListView, DetailView, View
+
+from .forms import ShopForm, ProductForm, TagForm, CategoryForm
 from django.urls import reverse_lazy
-from .models import CustomUser, Shop
+from .models import Basket, BasketItem, Category, CustomUser, Shop, Tag
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -53,7 +54,7 @@ class ShopListView(ActiveOnlyMixin, ListView):
         return shop
     
     
-class ShopDetailView(ActiveOnlyMixin, DeleteView):
+class ShopDetailView(ActiveOnlyMixin, DetailView):
     model = Shop
     template_name = 'shop_panel/shop_detail.html'
 
@@ -87,3 +88,62 @@ class DeleteShop(ActiveOnlyMixin, UpdateView):
 
 
 #product
+class CreateProduct(ActiveOnlyMixin, CreateView):
+    template_name = 'shop_panel/create_product.html'
+    form_class = ProductForm
+    success_url = "/shop/panel/"
+    
+    def form_valid(self, form):
+        product = form.save(commit=False)
+        id = (self.kwargs['pk'])
+        product.shop = Shop.objects.get(pk = id)
+        return super(CreateProduct, self).form_valid(form)
+    
+    
+class CreateCategory(ActiveOnlyMixin, CreateView):
+    template_name = 'shop_panel/create_category.html'
+    form_class = CategoryForm
+    success_url = "/shop/panel/"
+    
+    
+class CreateTag(ActiveOnlyMixin, CreateView):
+    template_name = 'shop_panel/create_tag.html'
+    form_class = TagForm
+    success_url = "/shop/panel/"
+    
+    
+class BasketListView(ListView):
+    model = Basket
+    template_name = 'shop_panel/basket_list.html'
+    paginate_by = 4
+
+    def get_context_data(self, **kwargs):
+        ctx = super(BasketListView, self).get_context_data(**kwargs)
+        id = self.kwargs["pk"]
+        ctx['filter'] = Basket.objects.filter(basketitem__product__shop__pk = id)
+        
+        return ctx
+    
+
+    
+    
+    
+class BasketDetailView(ActiveOnlyMixin, DetailView):
+    model = Basket
+    template_name = 'shop_panel/basket_detail.html'
+    
+    
+    # def get_context_data(self, **kwargs):
+    #     ctx = super(BasketDetailView, self).get_context_data(**kwargs)
+    #     print(ctx)
+    #     print('dakhel in')
+    #     id = (self.kwargs["pk"])
+    #     print('------')
+    #     print(id)
+    #     ctx['filter'] = Basket.objects.filter(pk = id)
+    #     return ctx
+    
+
+    
+    
+    

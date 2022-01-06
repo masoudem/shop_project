@@ -43,6 +43,7 @@ class Product(models.Model):
     price_per_unit = models.CharField(max_length=72)
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
+    shop = models.ForeignKey('Shop', on_delete=models.CASCADE)
     tag_product = models.ManyToManyField('Tag')
     
     def __str__(self):
