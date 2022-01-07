@@ -58,7 +58,7 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Basket)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ("payment_price","product_count")
+    list_display = ("payment_price",)
     list_filter = ("payment_price",)
     search_fields = ['"payment_price"']
 

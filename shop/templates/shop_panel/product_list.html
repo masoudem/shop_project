@@ -1,22 +1,18 @@
 {% extends 'layout_shop.html' %} {% block body %}
 
 <div class="containerf">
-  {% for shop in shop_list %}
+  {% for product in product_list %}
   <div class="item">
     <div class="card" style="width: 18rem">
       <img
-        src="{{shop.image.url}}"
+        src="{{product.image.url}}"
         class="card-img-top img-fluid rounded"
         alt="..."
       />
       <div class="card-body">
-        <p class="card-text">نام فروشگاه: {{shop.shop_name}}</p>
+        <p class="card-text">{{product.product_name}}</p>
       </div>
       
-      <a href="{% url 'shop-detail' shop.pk %}">
-        <input class="btn btn-primary" type="button" value="بیشتر" />
-      </a>
-
     </div>
   </div>
   {% endfor %}

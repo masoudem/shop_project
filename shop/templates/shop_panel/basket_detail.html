@@ -5,15 +5,14 @@
   <div class="item">
     <div class="card" style="width: 18rem">
 
+
       <div class="card-body">
-        <p class="card-text">{{basket.payment_price}</p>
+        <p class="card-text">اسم:{{basketitem.product.product_name}}</p>
+        <p class="card-text">ایمیل کاربر:{{basketitem.basket.customer.email}}</p>
+        <p class="card-text">قیمت:{{basketitem.product.price_per_unit}}</p>
+        <p class="card-text">تعداد:{{basketitem.product_count}}</p>
       </div>
-      <div class="card-body">
-        <p class="card-text">{{basket.product_count}</p>
-      </div>
-      <div class="card-body">
-        <p class="card-text">{{basket.customer</p>
-      </div>
+
 
 
     </div>

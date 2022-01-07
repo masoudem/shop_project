@@ -1,14 +1,13 @@
 {% extends 'layout_shop.html' %} {% block body %}
 
 <div class="containerf">
-  {% for basket in basket_list %}
+  {% for basket in basketitem_list %}
   <div class="item">
     <div class="card" style="width: 18rem">
 
       <div class="card-body">
-        <p>masoud</p>
-        <p class="card-text">{{basket.product_count}}</p>
-        <a href="{% url 'basket-detail' basket.pk %}" class="text-dark"><input type="button" value="جزئیات" /></i></a>
+        <p class="card-text">{{basket.product.product_name}}</p>
+        <a href="{% url 'basket-detail' basket.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="جزئیات" /></i></a>
       </div>
 
     </div>

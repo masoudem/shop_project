@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView, View
 
 from .forms import ShopForm, ProductForm, TagForm, CategoryForm
 from django.urls import reverse_lazy
-from .models import Basket, BasketItem, Category, CustomUser, Shop, Tag
+from .models import Basket, BasketItem, Category, CustomUser, Product, Shop, Tag
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -113,14 +113,15 @@ class CreateTag(ActiveOnlyMixin, CreateView):
     
     
 class BasketListView(ListView):
-    model = Basket
+    model = BasketItem
     template_name = 'shop_panel/basket_list.html'
     paginate_by = 4
 
     def get_context_data(self, **kwargs):
         ctx = super(BasketListView, self).get_context_data(**kwargs)
         id = self.kwargs["pk"]
-        ctx['filter'] = Basket.objects.filter(basketitem__product__shop__pk = id)
+        ctx['filter'] = BasketItem.objects.filter(product__shop__pk = id)
+        print(ctx)
         
         return ctx
     
@@ -129,19 +130,29 @@ class BasketListView(ListView):
     
     
 class BasketDetailView(ActiveOnlyMixin, DetailView):
-    model = Basket
+    model = BasketItem
     template_name = 'shop_panel/basket_detail.html'
     
     
-    # def get_context_data(self, **kwargs):
-    #     ctx = super(BasketDetailView, self).get_context_data(**kwargs)
-    #     print(ctx)
-    #     print('dakhel in')
-    #     id = (self.kwargs["pk"])
-    #     print('------')
-    #     print(id)
-    #     ctx['filter'] = Basket.objects.filter(pk = id)
-    #     return ctx
+    def get_context_data(self, **kwargs):
+        ctx = super(BasketDetailView, self).get_context_data(**kwargs)
+        id = (self.kwargs["pk"])
+        print(id)
+        ctx['filter'] = BasketItem.objects.get(pk = id)
+        print(ctx)
+        return ctx
+    
+    
+class ProductListView(ActiveOnlyMixin, ListView):
+    model = Product
+    template_name = 'shop_panel/product_list.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+        id = self.kwargs['pk']
+        product = Product.objects.filter(shop__pk = id)
+        print(product)
+        return product
     
 
     

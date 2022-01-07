@@ -26,12 +26,12 @@ class Shop(models.Model):
     
 class Basket(models.Model):
     payment_price = models.CharField(max_length=72)
-    product_count = models.PositiveIntegerField()
     customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE) 
     
     
 class BasketItem(models.Model):
     basket = models.ForeignKey('Basket', on_delete=models.CASCADE)
+    product_count = models.PositiveIntegerField()
     product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
     
 

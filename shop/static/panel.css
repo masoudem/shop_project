@@ -281,6 +281,11 @@ input.form_control {
   background-color: black;
 }
 
+.item input.btn {
+  width: 200px;
+  margin: 2px 0;
+}
+
 
 
 
