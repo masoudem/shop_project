@@ -19,13 +19,6 @@ class SignUpView(CreateView):
 
     success_url = '/user/signin/'
 
-    # def post(self, request, *args, **kwargs):
-    #     print('post is post')
-    #     return redirect('posts')
-    # def form_valid(self, form):
-    #     print('-------------------------------------')
-    #     return redirect('posts')
-
 
 # class SignInView(FormView):
 #     template_name = 'market_user_forms/signin.html'
@@ -69,18 +62,3 @@ def sign_in(request):
         else:
             messages.success(request, 'your password is not correct!')
     return render(request, "market_user_forms/signin.html", context)
-
-
-# def signup(request):
-#     form = SignUpForm(None or request.POST)
-#     if request.method == "POST":
-#         print('postform')
-#         if form.is_valid():
-#             print('formisvalid')
-#             user = CustomUser.objects.create_user(phone_number=form.cleaned_data['phone_number'], email=form.cleaned_data['email'], password=form.cleaned_data['password'],
-#                                                   first_name=form.cleaned_data['first_name'], last_name=form.cleaned_data['last_name'], user_type_owner_shop=form.cleaned_data['user_type_owner_shop'])
-#             print('new user register is :', user)
-#             print('----')
-#             return redirect('posts')
-
-#     return render(request, 'market_user_forms/signup.html', {'form': form})

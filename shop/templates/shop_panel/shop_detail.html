@@ -26,7 +26,7 @@
       </a>
       <a href="{% url 'create_product' shop.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="ایجاد محصول" /></i></a>
       <a href="{% url 'product-list' shop.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="جزئیات محصول" /></i></a>
-      <a href="{% url 'basket-list' shop.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="سبد خریدها" /></i></a>
+      <a href="{% url 'basket-list' shop.shop_name %}" class="text-dark"><input class="btn btn-primary" type="button" value="سبد خریدها" /></i></a>
     </div>
   </div>
 </div>

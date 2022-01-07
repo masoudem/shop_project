@@ -13,7 +13,7 @@ class Shop(models.Model):
         (ACT,'active'),
     ]
     
-    shop_name = models.CharField(max_length=72)
+    shop_name = models.CharField(max_length=72, unique= True)
     image = models.FileField(null=True, blank=True)
     created_date = models.DateField(auto_now_add=True)
     shop_type = models.CharField(max_length=72)
@@ -30,6 +30,17 @@ class Basket(models.Model):
     
     
 class BasketItem(models.Model):
+    CHK = 'chk'
+    DEL = 'del'
+    VRF = 'vrf'
+    ACT = 'act'
+    STATUS_CHOICES = [
+        (CHK,'check'),
+        (DEL,'delete'),
+        (VRF,'verify'),
+        (ACT,'active'),
+    ]
+    basket_status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=CHK)
     basket = models.ForeignKey('Basket', on_delete=models.CASCADE)
     product_count = models.PositiveIntegerField()
     product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)

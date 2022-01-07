@@ -9,6 +9,12 @@
         <p class="card-text">{{basket.product.product_name}}</p>
         <a href="{% url 'basket-detail' basket.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="جزئیات" /></i></a>
       </div>
+      <select class="form-select" aria-label="Default select example">
+        <option selected value="chk">در حال بررسی</option>
+        <option value="act">فعال</option>
+        <option value="cnl">کنسل</option>
+        <option value="vrf">تایید خرید</option>
+      </select>
 
     </div>
   </div>

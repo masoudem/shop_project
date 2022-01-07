@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.shortcuts import redirect
 from django.contrib.auth.views import redirect_to_login
 from market_user.models import CustomUser
+from .models import Shop
 
 
 class ActiveOnlyMixin(AccessMixin):
