@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'market_user',
     'blog',
     'market_shop',
@@ -91,6 +93,7 @@ DATABASES = {
         'PORT': '',
     }
 }
+
 
 
 
@@ -149,3 +152,14 @@ MESSAGE_TAGS = {
 
 LOGIN_URL = 'signin'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+}
