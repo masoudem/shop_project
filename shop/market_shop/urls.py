@@ -1,5 +1,7 @@
 from django.urls import path, re_path
 from .views import BasketListView, CreateCategory, CreateProduct, CreateShop, CreateTag, DeleteShop, PanelView, ProductListView, ShopDetailView, ShopListView, UpdateShop, BasketDetailView
+from .api_views import ShopAPIList
+
 
 urlpatterns = [
     path('panel/', PanelView.as_view(), name='panel'),
@@ -14,4 +16,6 @@ urlpatterns = [
     path('basket_detail/<int:pk>', BasketDetailView.as_view(), name='basket-detail'),
     path('update_shop/<int:pk>', UpdateShop.as_view(), name='update_shop'),
     path('delete_shop/<int:pk>', DeleteShop.as_view(), name='delete_shop'),
+    #api
+    path('api/shop_list/', ShopAPIList.as_view(), name = 'shop_api_list' )
 ]

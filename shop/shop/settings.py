@@ -160,6 +160,12 @@ REST_FRAMEWORK = {
 }
 
 from datetime import timedelta
-SIMPLE_JWT = {
-'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+# SIMPLE_JWT = {
+# 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+# }
+
+JWT_AUTH = {
+    # Authorization:Token xxx
+    'JWT_AUTH_HEADER_PREFIX': 'Token',
 }
+
