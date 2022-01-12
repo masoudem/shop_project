@@ -27,4 +27,5 @@ urlpatterns = [
 	path('dashboard/', dashboard ,name="dashboard"),
 	path('avatar/', user_avatar ,name="avatar"),
 	path("logout/", LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name="logout"),
+ 
 ]

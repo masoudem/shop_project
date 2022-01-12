@@ -25,11 +25,6 @@ class Shop(models.Model):
     
     
 class Basket(models.Model):
-    payment_price = models.CharField(max_length=72)
-    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE) 
-    
-    
-class BasketItem(models.Model):
     CHK = 'chk'
     DEL = 'del'
     VRF = 'vrf'
@@ -41,6 +36,12 @@ class BasketItem(models.Model):
         (ACT,'active'),
     ]
     basket_status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=CHK)
+    payment_price = models.IntegerField(default=0, blank=True)
+    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE) 
+    
+    
+class BasketItem(models.Model):
+    
     basket = models.ForeignKey('Basket', on_delete=models.CASCADE)
     product_count = models.PositiveIntegerField()
     product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
@@ -51,7 +52,7 @@ class Product(models.Model):
     image = models.FileField(null=True, blank=True)
     product_description = models.TextField()
     product_unit = models.PositiveIntegerField()
-    price_per_unit = models.CharField(max_length=72)
+    price_per_unit = models.PositiveIntegerField()
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     shop = models.ForeignKey('Shop', on_delete=models.CASCADE)
