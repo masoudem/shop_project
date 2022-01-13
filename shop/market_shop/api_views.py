@@ -68,3 +68,18 @@ class ItemAPIList(generics.ListCreateAPIView):
             serializer.save(basket= basket)
             
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class BasketVerify(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = BasketSerializer
+    
+    def get_queryset(self):
+        return Basket.objects.filter(basket_stauts = 'vrf', customer__email = self.request.user)
+    
+
+class BasketActive(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = BasketSerializer
+    
+    def get_queryset(self):
+        return Basket.objects.filter(basket_stauts = 'act', customer__email = self.request.user)
