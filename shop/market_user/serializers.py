@@ -18,7 +18,7 @@ class UserSerializers(serializers.ModelSerializer):
     
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'email', 'phone_number', 'password', 'password2']
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'password', 'password2', 'image']
         
         
     def validate(self, attrs):
@@ -32,7 +32,8 @@ class UserSerializers(serializers.ModelSerializer):
             phone_number=validated_data['phone_number'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
-            last_name=validated_data['last_name']
+            last_name=validated_data['last_name'],
+            image = validated_data['image']
         )
 
         
@@ -45,6 +46,6 @@ class UserSerializers(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name', 'email', 'phone_number',)
+        fields = ('first_name', 'last_name', 'email', 'phone_number','image')
     
     

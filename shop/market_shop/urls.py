@@ -1,7 +1,7 @@
 from unicodedata import name
 from django.urls import path, re_path
 from .views import BasketListView, CreateCategory, CreateProduct, CreateShop, CreateTag, DeleteShop, PanelView, ProductListView, ShopDetailView, ShopListView, UpdateShop, BasketDetailView, ChartView
-from .api_views import BasketActive, BasketVerify, CartItemAddView, CartItemDelView, CartItemView, ProductAPIList, ShopAPIList, CartItemAddOneView, CartItemReduceOneView
+from .api_views import BasketActive, BasketVerify, BasketVerifyView, CartItemAddView, CartItemDelView, CartItemView, ProductAPIList, ShopAPIList, CartItemAddOneView, CartItemReduceOneView
 
 
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
     path('api/cart_del/<int:pk>', CartItemDelView.as_view(), name = 'cart_del' ),
     path('api/add_one/<int:pk>/', CartItemAddOneView.as_view(), name='add_cart'),
     path('api/reduce_one/<int:pk>/', CartItemReduceOneView.as_view(), name='reduce_cart'),
+    path('api/verify/<int:pk>/', BasketVerifyView.as_view(), name='verify'),
     
 ]

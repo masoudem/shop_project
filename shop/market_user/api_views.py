@@ -13,27 +13,24 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import *
 from rest_framework.permissions import AllowAny, IsAuthenticated
-
-
-
+from rest_framework.parsers import FormParser, MultiPartParser
 
 
 class SignUpApi(generics.CreateAPIView):
-    
+    parser_classes = (FormParser, MultiPartParser)
     queryset = CustomUser.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = UserSerializers
-    
 
-class UserList(generics.RetrieveUpdateAPIView):
-    
+
+class UserList(generics.RetrieveUpdateDestroyAPIView):
+    parser_classes = (FormParser, MultiPartParser)
     permission_classes = (IsAuthenticated,)
     serializer_class = ProfileSerializer
-    
+
     def get_object(self):
         print(self.request.user)
-        return CustomUser.objects.get(email = self.request.user)
-        
+        return CustomUser.objects.get(email=self.request.user)
 
     def post(self, request, format=None):
         serializer = ProfileSerializer(data=request.data)
@@ -41,4 +38,3 @@ class UserList(generics.RetrieveUpdateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    

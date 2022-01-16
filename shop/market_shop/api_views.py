@@ -16,10 +16,11 @@ from rest_framework.views import APIView
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
+from rest_framework.parsers import FormParser, MultiPartParser
 
 
 class ShopAPIList(generics.ListAPIView):
-    
+   
     permission_classes = (AllowAny,)
     serializer_class = ShopSerializer
     
@@ -50,7 +51,8 @@ class CartItemAddView(generics.CreateAPIView):
     queryset = BasketItem.objects.all()
     serializer_class = ItemSerializer
     permission_classes = (IsAuthenticated, )
-
+    parser_classes = (FormParser, MultiPartParser)
+    
 
 class CartItemDelView(generics.DestroyAPIView):
     permission_classes = (IsAuthenticated, )
@@ -66,6 +68,18 @@ class CartItemDelView(generics.DestroyAPIView):
         target_product.delete()
         return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})      
 
+
+class BasketVerifyView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, *args, **kwargs):
+        email = request.user
+        basket = Basket.objects.filter(customer__email=email)
+        target_product = get_object_or_404(basket, pk=self.kwargs['pk'])
+        target_product.basket_status = 'vrf'
+        target_product.save()
+        return Response(status=status.HTTP_200_OK, data={"detail": "verify"})      
+
     
 class CartItemAddOneView(generics.GenericAPIView):
     permission_classes = (IsAuthenticated, )
@@ -80,20 +94,22 @@ class CartItemAddOneView(generics.GenericAPIView):
                     "detail": "this item is sold out try another one !",
                     "code": "sold_out"})
 
-        target_product.product_count = target_product.product_count + 1
+        target_product.product_count = int(target_product.product_count) + 1
         product.product_unit = product.product_unit - 1
+
         product.save()
         target_product.save()
+        
         return Response(
             status=status.HTTP_226_IM_USED,
             data={"detail": 'one object added', "code": "done"})
 
         
 
-class CartItemReduceOneView(APIView):
+class CartItemReduceOneView(generics.GenericAPIView):
     permission_classes = (IsAuthenticated, )
 
-    def get(self):
+    def get(self, request, *args, **kwargs):
         
         target_product = BasketItem.objects.get(pk= self.kwargs['pk'])
         product = get_object_or_404(Product, id=target_product.product.id)
@@ -103,7 +119,7 @@ class CartItemReduceOneView(APIView):
                     "detail": "there is no more item like this in tour cart",
                     "code": "no_more"})
 
-        target_product.product_count = target_product.procut_count - 1
+        target_product.product_count = int(target_product.procut_count) - 1
         product.product_unit = product.product_unit + 1
         product.save()
         target_product.save()

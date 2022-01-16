@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(('email address'), unique=True)
     phone_number = models.CharField(validators=[RegexValidator(regex=r'^(\+98?)?{?(0?9[0-9]{9,9}}?)$',message='Hashtag doesnt comply'),], max_length=14, blank=True)
     user_type_owner_shop = models.BooleanField(default=False)
+    image = models.FileField(blank=True, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['phone_number']
 
