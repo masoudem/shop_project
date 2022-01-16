@@ -1,6 +1,7 @@
+from unicodedata import name
 from django.urls import path, re_path
-from .views import BasketListView, CreateCategory, CreateProduct, CreateShop, CreateTag, DeleteShop, PanelView, ProductListView, ShopDetailView, ShopListView, UpdateShop, BasketDetailView
-from .api_views import BasketActive, BasketVerify, ItemAPIList, ProductAPIList, ShopAPIList
+from .views import BasketListView, CreateCategory, CreateProduct, CreateShop, CreateTag, DeleteShop, PanelView, ProductListView, ShopDetailView, ShopListView, UpdateShop, BasketDetailView, ChartView
+from .api_views import BasketActive, BasketVerify, CartItemAddView, CartItemDelView, CartItemView, ProductAPIList, ShopAPIList, CartItemAddOneView, CartItemReduceOneView
 
 
 urlpatterns = [
@@ -16,11 +17,16 @@ urlpatterns = [
     path('basket_detail/<int:pk>', BasketDetailView.as_view(), name='basket-detail'),
     path('update_shop/<int:pk>', UpdateShop.as_view(), name='update_shop'),
     path('delete_shop/<int:pk>', DeleteShop.as_view(), name='delete_shop'),
+    path('chart/<int:pk>', ChartView.as_view(), name='chart'),
     #api
     path('api/shop_list/', ShopAPIList.as_view(), name = 'shop_api_list' ),
     path('api/shop_list/<int:pk>', ProductAPIList.as_view(), name = 'product_api_list' ),
-    path('api/items/<int:pk>', ItemAPIList.as_view(), name = 'items' ),
-    path('api/basket_act/<int:pk>', BasketActive.as_view(), name = 'active' ),
-    path('api/basket_vrf/<int:pk>', BasketVerify.as_view(), name = 'verify' ),
+    path('api/basket_act/', BasketActive.as_view(), name = 'active' ),
+    path('api/basket_vrf/', BasketVerify.as_view(), name = 'verify' ),
+    path('api/cart_item/', CartItemView.as_view(), name = 'cart_item' ),
+    path('api/cart_add/', CartItemAddView.as_view(), name = 'cart_add' ),
+    path('api/cart_del/<int:pk>', CartItemDelView.as_view(), name = 'cart_del' ),
+    path('api/add_one/<int:pk>/', CartItemAddOneView.as_view(), name='add_cart'),
+    path('api/reduce_one/<int:pk>/', CartItemReduceOneView.as_view(), name='reduce_cart'),
     
 ]

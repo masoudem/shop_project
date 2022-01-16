@@ -1,3 +1,4 @@
+from cgitb import lookup
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, reverse
 from django.shortcuts import render
@@ -12,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .access import ActiveOnlyMixin
+from django.http import JsonResponse
 
 
 # shop
@@ -142,7 +144,32 @@ class ProductListView(ActiveOnlyMixin, ListView):
     paginate_by = 4
 
     def get_queryset(self):
+        
         id = self.kwargs['pk']
         product = Product.objects.filter(shop__pk=id)
         print(product)
         return product
+    
+    
+class ChartView(ActiveOnlyMixin, DetailView):
+    model = Product
+    template_name = 'shop_panel/chart.html'
+    
+    def get_context_data(self, **kwargs):
+        ctx = super(ChartView, self).get_context_data(**kwargs)
+
+        labels = []
+        data = []
+        price = []
+        queryset = Product.objects.filter(shop__pk=self.kwargs['pk'])
+        for entry in queryset:
+            labels.append(entry.product_name)
+            data.append(entry.product_unit)
+            price.append(entry.price_per_unit)
+            
+        # data = {'labels': labels,'data': data}
+        ctx['labels'] = labels
+        ctx['data'] = data
+        ctx['price'] = price
+        return ctx
+

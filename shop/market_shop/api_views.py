@@ -34,52 +34,98 @@ class ProductAPIList(generics.ListAPIView):
     filterset_class = ProductListFilter
     
     def get_queryset(self):
-        print(self.kwargs["pk"])
         return Product.objects.filter(shop__id = self.kwargs["pk"])
     
 
-class BasketAPIList(generics.CreateAPIView):
-    permission_classes = (IsAuthenticated,)
+class CartItemView(generics.ListAPIView):
     serializer_class = BasketSerializer
+    permission_classes = (IsAuthenticated, )
     
-    def create(self):
-        basket = Basket.objects.create(customer__email = self.request.user)
-        basket.save()
-        return basket
-    
-    
-class ItemAPIList(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = ItemSerializer
-    
+
     def get_queryset(self):
-        self.pk = self.kwargs['pk']
-        return BasketItem.objects.filter(basket__customer__email = self.request.user, product__shop__pk = self.kwargs['pk']).exclude(basket__basket_status = 'vrf')
+        return BasketItem.objects.filter(basket__customer__email=self.request.user)
     
-    def create(self, request, *args, **kwargs):
-        print(kwargs)
-        basket = Basket.objects.filter(basket_status = 'vrf', basketitem__product__shop__pk = self.kwargs['pk'], customer__email = self.request.user)
-        if basket:
-            BasketAPIList()
-            basket = Basket.objects.filter(basket__basketitem__product__shop__pk = self.kwargs['pk'], customer__email = self.request.user).exclude(basket_status = 'vrf')
-        serializer = ItemSerializer(data=request.data)
-        if serializer.is_valid():
-            print(serializer)
-            serializer.save(basket= basket)
-            
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class CartItemAddView(generics.CreateAPIView):
+    queryset = BasketItem.objects.all()
+    serializer_class = ItemSerializer
+    permission_classes = (IsAuthenticated, )
+
+
+class CartItemDelView(generics.DestroyAPIView):
+    permission_classes = (IsAuthenticated, )
+    queryset = BasketItem.objects.all()
+
+    def delete(self, request):
+        email = request.user
+        cart_item = BasketItem.objects.filter(email=email)
+        target_product = get_object_or_404(cart_item, pk=self.kwargs['pk'])
+        product = get_object_or_404(Product, id=target_product.product.id)
+        product.product_unit = product.product_unit + target_product.product_count
+        product.save()
+        target_product.delete()
+        return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})      
+
+    
+class CartItemAddOneView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated, )
+    
+    def get(self, request, *args, **kwargs):
+        print(self.kwargs)
+        target_product = BasketItem.objects.get(pk=self.kwargs['pk'])
+        product = get_object_or_404(Product, id=target_product.product.id)
+        if product.product_unit <= 0:
+            return Response(
+                data={
+                    "detail": "this item is sold out try another one !",
+                    "code": "sold_out"})
+
+        target_product.product_count = target_product.product_count + 1
+        product.product_unit = product.product_unit - 1
+        product.save()
+        target_product.save()
+        return Response(
+            status=status.HTTP_226_IM_USED,
+            data={"detail": 'one object added', "code": "done"})
+
+        
+
+class CartItemReduceOneView(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self):
+        
+        target_product = BasketItem.objects.get(pk= self.kwargs['pk'])
+        product = get_object_or_404(Product, id=target_product.product.id)
+        if target_product.product_count == 0:
+            return Response(
+                data={
+                    "detail": "there is no more item like this in tour cart",
+                    "code": "no_more"})
+
+        target_product.product_count = target_product.procut_count - 1
+        product.product_unit = product.product_unit + 1
+        product.save()
+        target_product.save()
+        return Response(
+            status=status.HTTP_226_IM_USED,
+            data={
+                "detail": 'one object deleted',
+                "code": "done"
+            })
+        
 
 class BasketVerify(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = BasketSerializer
+    serializer_class = StatusSerializer
     
     def get_queryset(self):
-        return Basket.objects.filter(basket_stauts = 'vrf', customer__email = self.request.user)
+        return Basket.objects.filter(basket_status = 'vrf', customer__email = self.request.user)
     
 
 class BasketActive(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = BasketSerializer
+    serializer_class = StatusSerializer
     
     def get_queryset(self):
-        return Basket.objects.filter(basket_stauts = 'act', customer__email = self.request.user)
+        return Basket.objects.filter(basket_status = 'act', customer__email = self.request.user)

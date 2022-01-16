@@ -35,9 +35,13 @@ class Basket(models.Model):
         (VRF,'verify'),
         (ACT,'active'),
     ]
-    basket_status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=CHK)
+    basket_status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=CHK, null=True, blank=True)
     payment_price = models.IntegerField(default=0, blank=True)
-    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE) 
+    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.id)
+    
     
     
 class BasketItem(models.Model):
@@ -45,6 +49,13 @@ class BasketItem(models.Model):
     basket = models.ForeignKey('Basket', on_delete=models.CASCADE)
     product_count = models.PositiveIntegerField()
     product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
+    
+    def add_amount(self):
+        amount = self.product.price_per_unit * self.product_count
+        profile = self.basket
+        profile.payment_price = profile.payment_price + amount
+        profile.save()
+        return True
     
 
 class Product(models.Model):

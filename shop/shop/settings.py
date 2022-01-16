@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'django_filters',
     'market_user',
@@ -183,12 +184,12 @@ REST_FRAMEWORK = {
 }
 
 from datetime import timedelta
-# SIMPLE_JWT = {
-# 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-# }
-
-JWT_AUTH = {
-    # Authorization:Token xxx
-    'JWT_AUTH_HEADER_PREFIX': 'Token',
+SIMPLE_JWT = {
+'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
+
+# JWT_AUTH = {
+#     # Authorization:Token xxx
+#     'JWT_AUTH_HEADER_PREFIX': 'Token',
+# }
 
