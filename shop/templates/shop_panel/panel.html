@@ -1,17 +1,18 @@
 {% extends 'layout_shop.html' %} {% block body %}
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-11">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4>اضافه کردن فروشگاه جدید</h4>
-                    <a href="{% url 'create_shop' %}" class="text-dark">+<i class="fas fa-shopping-cart"></i></a>
-                </div>
-            </div>
-
+  <div class="row">
+    <div class="col-md-11">
+      <div class="row">
+        <div class="col-md-12">
+          <h4>اضافه کردن فروشگاه جدید</h4>
+          <a href="{% url 'create_shop' %}" class="text-dark"
+            >+<i class="fas fa-shopping-cart"></i
+          ></a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 {% endblock body %}

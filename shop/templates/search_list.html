@@ -1,25 +1,21 @@
-{% extends "layout.html" %} 
-{% block body %}
-
-{% if posts %} {% for post in posts %}
+{% extends "layout.html" %} {% block body %} {% if posts %} {% for post in posts
+%}
 <div class="row justify-content-center">
   <div class="col-md-10 offset-md-3">
     <!-- Post Content Column -->
     <div class="col-lg-8 border-3 border-dark mb-lg-3 sketchy">
       <!-- Title -->
-      
+
       <h2 class="mt-4">{{post.title}}</h2>
 
       <!-- Author -->
       <p class="lead">{{post.post_date}}</p>
-      <img class="img-fluid rounded" src="{{post.image.url}}" alt="">
+      <img class="img-fluid rounded" src="{{post.image.url}}" alt="" />
       <a href="{% url 'post_detail' post.slug %}">
-        <input type="button" value="Detail" class="btn btn-danger">
+        <input type="button" value="Detail" class="btn btn-danger" />
       </a>
       <!-- Preview Image -->
     </div>
   </div>
 </div>
-{% endfor %}
-
-{% endif %} {% endblock body %}
+{% endfor %} {% endif %} {% endblock body %}

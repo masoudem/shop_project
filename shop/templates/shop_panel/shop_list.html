@@ -12,17 +12,13 @@
       <div class="card-body">
         <p class="card-text">نام فروشگاه: {{shop.shop_name}}</p>
       </div>
-      
+
       <a href="{% url 'shop-detail' shop.pk %}">
         <input class="btn btn-primary" type="button" value="بیشتر" />
       </a>
-
     </div>
   </div>
   {% endfor %}
 </div>
-
-
-
 
 {% endblock body %}

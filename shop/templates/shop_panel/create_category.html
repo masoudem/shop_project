@@ -1,19 +1,11 @@
-{% extends "layout_shop.html" %} 
-{% block body %}
-{% load crispy_forms_tags %}
+{% extends "layout_shop.html" %} {% block body %} {% load crispy_forms_tags %}
 
 <div class="main">
-    <!-- Create a Form -->
-    <form method="POST">
-        <!-- Security token by Django -->
-        {% csrf_token %}
- 
-        <!-- form as paragraph -->
-        {{form|crispy}}
- 
-        <input type="submit" value="Add new Category">
-    </form>
- 
+  <form method="POST">
+    {% csrf_token %} {{form|crispy}}
+
+    <input type="submit" value="Add new Category" />
+  </form>
 </div>
 
 {% endblock body %}

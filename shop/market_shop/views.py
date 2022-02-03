@@ -1,19 +1,11 @@
-from cgitb import lookup
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import redirect, reverse
-from django.shortcuts import render
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic import ListView, DetailView, View
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import ListView, DetailView
 
 from .forms import ShopForm, ProductForm, TagForm, CategoryForm
-from django.urls import reverse_lazy
-from .models import Basket, BasketItem, Category, CustomUser, Product, Shop, Tag
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
+from .models import Basket, CustomUser, Product, Shop
+
 from .access import ActiveOnlyMixin
-from django.http import JsonResponse
 
 
 # shop
@@ -68,9 +60,7 @@ class UpdateShop(ActiveOnlyMixin, UpdateView):
         shop = form.save(commit=False)
         shop.shop_status = 'pub'
         return super(UpdateShop, self).form_valid(form)
-    # def get_queryset(self):
-    #     id = (self.kwargs['pk'])
-    #     return Shop.objects.get(pk =id).update(shop_status='act')
+    
 
 
 class DeleteShop(ActiveOnlyMixin, UpdateView):
@@ -111,31 +101,40 @@ class CreateTag(ActiveOnlyMixin, CreateView):
 
 
 class BasketListView(ActiveOnlyMixin, ListView):
-    model = BasketItem
+    model = Basket
     template_name = 'shop_panel/basket_list.html'
     paginate_by = 4
 
     def get_queryset(self):
         name = self.kwargs["name"]
-        basket = BasketItem.objects.filter(
-            product__shop__shop_name=name, product__shop__owner__email=self.request.user)
-        mak = BasketItem.objects.filter(product__shop__shop_name='مکتب')
-        print(mak)
+        basket = Basket.objects.filter(
+            basketitem__product__shop__shop_name=name)
+        print(basket)
 
         return basket
 
 
-class BasketDetailView(ActiveOnlyMixin, DetailView):
-    model = BasketItem
+class BasketDetailView(ActiveOnlyMixin, UpdateView):
+    model = Basket
     template_name = 'shop_panel/basket_detail.html'
+    fields = ['basket_status']
+    success_url = "/shop/panel/"
 
     def get_context_data(self, **kwargs):
         ctx = super(BasketDetailView, self).get_context_data(**kwargs)
+        print(ctx)
         id = (self.kwargs["pk"])
         print(id)
-        ctx['filter'] = BasketItem.objects.get(pk=id)
+        ctx['filter'] = Basket.objects.get(pk=id)
         print(ctx)
         return ctx
+
+
+class BasketStatusView(ActiveOnlyMixin, UpdateView):
+    model = Basket
+    fields = ['basket_status']
+    template_name = 'shop_panel/basket_status.html'
+    success_url = "/shop/panel/"
 
 
 class ProductListView(ActiveOnlyMixin, ListView):
@@ -144,17 +143,17 @@ class ProductListView(ActiveOnlyMixin, ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        
+
         id = self.kwargs['pk']
         product = Product.objects.filter(shop__pk=id)
         print(product)
         return product
-    
-    
+
+
 class ChartView(ActiveOnlyMixin, DetailView):
     model = Product
     template_name = 'shop_panel/chart.html'
-    
+
     def get_context_data(self, **kwargs):
         ctx = super(ChartView, self).get_context_data(**kwargs)
 
@@ -166,10 +165,8 @@ class ChartView(ActiveOnlyMixin, DetailView):
             labels.append(entry.product_name)
             data.append(entry.product_unit)
             price.append(entry.price_per_unit)
-            
-        # data = {'labels': labels,'data': data}
+
         ctx['labels'] = labels
         ctx['data'] = data
         ctx['price'] = price
         return ctx
-

@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Post, Category, Comment, Tag, UserProfile
-from django.utils.html import format_html
 
 
 @admin.register(Post)
@@ -30,7 +29,7 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ("name","email")
+    list_display = ("name", "email")
     list_filter = ("name",)
     search_fields = ['name']
 
@@ -47,5 +46,3 @@ class PersonAdmin(admin.ModelAdmin):
     list_display = ("user",)
     list_filter = ("user",)
     search_fields = ['user']
-
-

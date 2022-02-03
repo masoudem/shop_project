@@ -20,6 +20,6 @@ function menuBtnChange() {
     document.body.style.marginRight = "250px";
   } else {
     closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-    document.body.style.marginRight = '78px';
+    document.body.style.marginRight = "78px";
   }
 }

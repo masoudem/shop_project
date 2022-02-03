@@ -1,30 +1,40 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "layout.html" %} {% block body %}
 <div class="list-group">
-    {% if category_list %}
-    {% for category in category_list %}
-    <div class="container border border-1 border-dark p-1 m-1">
-        <a href="{% url 'category_detail' category.id %}" class="list-group-item list-group-item-action bg-dark text-light table-hover">
-            {{category.name}}
-        </a>
-        {% if request.user.is_authenticated %}
-        <a class='btn btn-primary w-20 m-2' href="{% url 'update_category' category.id %}">
-            Update
-        </a>
-        <a class='btn btn-danger w-20 m-2' href="{% url 'delete_category' category.id %}">
-            Delete
-        </a>
-        {% endif %}
-    </div>
-
-    {% endfor %}
+  {% if category_list %} {% for category in category_list %}
+  <div class="container border border-1 border-dark p-1 m-1">
+    <a
+      href="{% url 'category_detail' category.id %}"
+      class="
+        list-group-item list-group-item-action
+        bg-dark
+        text-light
+        table-hover
+      "
+    >
+      {{category.name}}
+    </a>
+    {% if request.user.is_authenticated %}
+    <a
+      class="btn btn-primary w-20 m-2"
+      href="{% url 'update_category' category.id %}"
+    >
+      Update
+    </a>
+    <a
+      class="btn btn-danger w-20 m-2"
+      href="{% url 'delete_category' category.id %}"
+    >
+      Delete
+    </a>
     {% endif %}
+  </div>
+
+  {% endfor %} {% endif %}
 </div>
 {% if request.user.is_authenticated %}
-<div class='container-fluid'>
-    <a class='btn btn-success mt-3' href="{% url 'create_category' %}">
-        Add Cattegory
-    </a>
+<div class="container-fluid">
+  <a class="btn btn-success mt-3" href="{% url 'create_category' %}">
+    Add Cattegory
+  </a>
 </div>
-{% endif %}
-{% endblock body %}
+{% endif %} {% endblock body %}

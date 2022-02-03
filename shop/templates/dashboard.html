@@ -22,7 +22,9 @@
               class="rounded mb-2 img-thumbnail"
             />
             {% endif %}
-            <a href="http://127.0.0.1:8000/post/avatar" class="btn btn-outline-dark btn-sm btn-block"
+            <a
+              href="http://127.0.0.1:8000/post/avatar"
+              class="btn btn-outline-dark btn-sm btn-block"
               >Edit profile</a
             >
           </div>
@@ -42,8 +44,11 @@
       <div class="py-4 px-4">
         <div class="d-flex align-items-center justify-content-between mb-3">
           <h5 class="mb-0">پست ها</h5>
-          <a href="{% url 'create_post' %}" class="btn btn-link btn-outline-dark text-muted"
-            style="text-decoration: none;">اضافه کردن پست جدید +</a
+          <a
+            href="{% url 'create_post' %}"
+            class="btn btn-link btn-outline-dark text-muted"
+            style="text-decoration: none"
+            >اضافه کردن پست جدید +</a
           >
         </div>
         {% if posts %} {% for post in posts %}

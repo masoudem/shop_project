@@ -1,4 +1,7 @@
 import email
+from itertools import product
+from urllib import response
+from django.http import request
 from model_mommy import mommy
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -24,60 +27,33 @@ class TestPost(APITestCase):
         )
         token, created = Token.objects.get_or_create(user=self.user)
         self.client = Client(HTTP_AUTHORIZATION='Token ' + token.key)
-        
         self.shop = mommy.make(Shop)
-        self.product = mommy.make(Product, shop = self.shop)
+        self.product = mommy.make(Product, shop=self.shop)
+        self.basket = mommy.make(Basket, customer = self.user)
+        self.basket_item = mommy.make(BasketItem, product = self.product, basket = self.basket)
+        self.product_id = str(self.product.id)
         
-
+        
     def test_shop_api_list(self):
         response = self.client.get(reverse('shop_api_list'))
 
         self.assertEqual(response.status_code, 200)
-    
+
     def test_product_api_list(self):
-        response = self.client.get(reverse('product_api_list', kwargs={"pk": 1}))
+        response = self.client.get(
+            reverse('product_api_list', kwargs={"pk": 1}))
 
         self.assertEqual(response.status_code, 200)
-    
-    # def test_basket_api_create(self):
-    #     response = self.client.get(reverse('items', kwargs={"pk": 1}))
 
-    #     self.assertEqual(response.status_code, 200)
+    def test_cart_item_view(self):
+        response = self.client.get(reverse('cart_item', request=['test@email.com']))
+
+        self.assertEqual(response.status_code, 200)
         
+    def test_cart_item_add_view(self):
+        response = self.client.post(reverse('cart_add'), data={'product_id':self.product_id, 'product_count':'3'})
         
-        
-    
+        self.assertEqual(response.status_code, 200)
 
-    # def test_post_details(self):
 
-    #     test = mommy.make(Post)
-    #     print(test.slug)
-    #     response = self.client.get(reverse("post_details", kwargs={"slug": test.slug}))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_comment_details(self):
-    #     mommy.make(Comment, _quantity=3)
-    #     response = self.client.get(reverse('comment_details'))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(len(response.data), 3)
-
-    # def test_comment_details(self):
-    #     mommy.make(Comment, body='salam')
-    #     mommy.make(Comment, _quantity=4)
-    #     response = self.client.get(reverse('comment_details', kwargs={"id": 1}))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(len(response.data), 0)
-    #     response2 = self.client.get(reverse('comment_details', kwargs={"id": 7}))
-    #     self.assertEqual(response2.status_code, status.HTTP_404_NOT_FOUND)
-
-    # def test_category_list(self):
-    #     mommy.make(Category, _quantity=12)
-    #     response = self.client.get(reverse('category_lists'))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(len(response.data), 12)
-
-    # def test_category_list(self):
-    #     mommy.make(Category, _quantity=55)
-    #     response = self.client.get(reverse('category_lists'))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(len(response.data), 55)

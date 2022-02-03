@@ -1,72 +1,60 @@
 {% extends 'layout_shop.html' %} {% block body %}
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-5 mt-3 mb-3 sign_up">
-            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">ایجاد فروشگاه</p>
+  <div class="row justify-content-center">
+    <div class="col-md-5 mt-3 mb-3 sign_up">
+      <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">ایجاد فروشگاه</p>
 
-              <form class="form mx-1 mx-md-4" enctype='multipart/form-data' method="post">
-                {% csrf_token %}
-                {{form.media}}
+      <form
+        class="form mx-1 mx-md-4"
+        enctype="multipart/form-data"
+        method="post"
+      >
+        {% csrf_token %} {{form.media}}
 
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    {{form.product_name}}
-                  </div>
-                </div>
-                
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    {{form.product_unit}}
-                  </div>
-                </div>
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    {{form.price_per_unit}}
-                  </div>
-                </div>
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    {{form.category}}
-                  </div>
-                </div>
-
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    {{form.tag_product}}
-                  </div>
-                </div>
-
-                
-                <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-pen fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                        {{form.product_description}}
-                    </div>
-                </div>
-
-                <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-image fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                        {{form.image}}
-                    </div>
-                </div>
-                
-
-                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                  <button type="submit" class="btn btn-primary btn-lg">ایجاد محصول</button>
-                </div>
-
-              </form>
-
+        <div class="d-flex flex-row align-items-center mb-4">
+          <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
+          <div class="form-outline flex-fill mb-0">{{form.product_name}}</div>
         </div>
-    </div>
-</div>
 
+        <div class="d-flex flex-row align-items-center mb-4">
+          <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
+          <div class="form-outline flex-fill mb-0">{{form.product_unit}}</div>
+        </div>
+        <div class="d-flex flex-row align-items-center mb-4">
+          <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
+          <div class="form-outline flex-fill mb-0">{{form.price_per_unit}}</div>
+        </div>
+        <div class="d-flex flex-row align-items-center mb-4">
+          <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
+          <div class="form-outline flex-fill mb-0">{{form.category}}</div>
+        </div>
+
+        <div class="d-flex flex-row align-items-center mb-4">
+          <i class="fas fa-shopping-cart fa-lg me-3 fa-fw"></i>
+          <div class="form-outline flex-fill mb-0">{{form.tag_product}}</div>
+        </div>
+
+        <div class="d-flex flex-row align-items-center mb-4">
+          <i class="fas fa-pen fa-lg me-3 fa-fw"></i>
+          <div class="form-outline flex-fill mb-0">
+            {{form.product_description}}
+          </div>
+        </div>
+
+        <div class="d-flex flex-row align-items-center mb-4">
+          <i class="fas fa-image fa-lg me-3 fa-fw"></i>
+          <div class="form-outline flex-fill mb-0">{{form.image}}</div>
+        </div>
+
+        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+          <button type="submit" class="btn btn-primary btn-lg">
+            ایجاد محصول
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock body %}

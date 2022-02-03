@@ -4,11 +4,9 @@ from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.shortcuts import redirect
 from django.contrib.auth.views import redirect_to_login
 from market_user.models import CustomUser
-from .models import Shop
 
 
 class ActiveOnlyMixin(AccessMixin):
-    
 
     def get_not_activated_message(self):
         return self.not_activated_message
@@ -37,7 +35,8 @@ class ActiveOnlyMixin(AccessMixin):
         return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
 
     def dispatch(self, request, *args, **kwargs):
-        user_type = CustomUser.objects.get(email=request.user).user_type_owner_shop
+        user_type = CustomUser.objects.get(
+            email=request.user).user_type_owner_shop
         if not user_type:
             return self.handle_no_permission()
         # if not request.user.is_authenticated():

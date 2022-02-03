@@ -1,21 +1,11 @@
-from django.db.models.query import QuerySet
-from django.shortcuts import render
-from django.views.generic.base import View
-from rest_framework.serializers import Serializer
 from .filters import ProductListFilter
-# Create your views here.
-from rest_framework import generics, status, mixins
+from rest_framework import generics, status
 from rest_framework.generics import get_object_or_404
-
 from .models import *
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from .serializers import *
-from rest_framework.permissions import IsAuthenticated
-from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.parsers import FormParser, MultiPartParser
 
 
@@ -58,12 +48,13 @@ class CartItemDelView(generics.DestroyAPIView):
     permission_classes = (IsAuthenticated, )
     queryset = BasketItem.objects.all()
 
-    def delete(self, request):
+    def delete(self, request,  *args, **kwargs):
+        print(self.kwargs['pk'])
         email = request.user
-        cart_item = BasketItem.objects.filter(email=email)
+        cart_item = BasketItem.objects.filter(basket__customer__email=email)
         target_product = get_object_or_404(cart_item, pk=self.kwargs['pk'])
         product = get_object_or_404(Product, id=target_product.product.id)
-        product.product_unit = product.product_unit + target_product.product_count
+        product.product_unit = int(product.product_unit )+ int(target_product.product_count)
         product.save()
         target_product.delete()
         return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})      
