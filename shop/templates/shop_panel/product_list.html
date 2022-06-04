@@ -1,0 +1,20 @@
+{% extends 'layout_shop.html' %} {% block body %}
+
+<div class="containerf">
+  {% for product in product_list %}
+  <div class="item">
+    <div class="card" style="width: 18rem">
+      <img
+        src="{{product.image.url}}"
+        class="card-img-top img-fluid rounded"
+        alt="..."
+      />
+      <div class="card-body">
+        <p class="card-text">{{product.product_name}}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock body %}

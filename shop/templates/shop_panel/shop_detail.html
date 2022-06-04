@@ -1,0 +1,35 @@
+{% extends 'layout_shop.html' %} {% block body %}
+
+<div class="containerf">
+  
+  <div class="item">
+    <div class="card" style="width: 18rem">
+      <img
+        src="{{shop.image.url}}"
+        class="card-img-top img-fluid rounded"
+        alt="..."
+      />
+      <div class="card-body">
+        <p class="card-text">نام فروشگاه : {{shop.shop_name}}</p>
+      </div>
+      <a href="{% url 'update_shop' shop.pk %}">
+        <input class="btn btn-primary" type="button" value="بروزرسانی" />
+      </a>
+      <a href="{% url 'delete_shop' shop.pk %}">
+        <input class="btn btn-primary" type="button" value="حذف" />
+      </a>
+      <a href="{% url 'create_category' %}">
+        <input class="btn btn-primary" type="button" value="ایجاد دسته بندی" />
+      </a>
+      <a href="{% url 'create_tag' %}">
+        <input class="btn btn-primary" type="button" value="ایجاد برچسب" />
+      </a>
+      <a href="{% url 'create_product' shop.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="ایجاد محصول" /></i></a>
+      <a href="{% url 'product-list' shop.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="جزئیات محصول" /></i></a>
+      <a href="{% url 'basket-list' shop.shop_name %}" class="text-dark"><input class="btn btn-primary" type="button" value="سبد خریدها" /></i></a>
+      <a href="{% url 'chart' pk=shop.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="چارت" /></i></a>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

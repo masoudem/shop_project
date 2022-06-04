@@ -1,0 +1,22 @@
+{% extends 'layout_shop.html' %} {% block body %}
+
+<div class="containerf">
+  {% for basket in basket_list %}
+  <div class="item">
+    <div class="card" style="width: 18rem">
+
+      <div class="card-body">
+        <p class="card-text">{{basket.customer}}</p>
+        <a href="{% url 'basket-detail' basket.pk %}" class="text-dark"><input class="btn btn-primary" type="button" value="جزئیات" /></i></a>
+      </div>
+     
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+
+{% endblock body %}

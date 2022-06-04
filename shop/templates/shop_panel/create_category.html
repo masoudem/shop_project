@@ -1,0 +1,11 @@
+{% extends "layout_shop.html" %} {% block body %} {% load crispy_forms_tags %}
+
+<div class="main">
+  <form method="POST">
+    {% csrf_token %} {{form|crispy}}
+
+    <input type="submit" value="Add new Category" />
+  </form>
+</div>
+
+{% endblock body %}

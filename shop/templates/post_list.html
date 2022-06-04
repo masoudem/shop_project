@@ -1,0 +1,150 @@
+{% extends "layout.html" %} {% block body %} {% if messages %}
+<div id="msg">
+  <span class="messages text-center">
+    {% for message in messages %}
+    <p class="{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  </span>
+</div>
+{% endif %} {% if post_img %}
+<div class="contianer ml-lg-3">
+  <div class="row">
+    <div
+      class="col-md-10"
+      style="
+        background-color: rgb(242, 242, 242, 0.4);
+        margin: 3px 105px 0px 130px;
+        padding: 10px;
+      "
+    >
+      <div class="row justify-content-center">
+        <div
+          class="col-md-5 mt-lg-3"
+          onclick="location.href='{% url 'post_detail' post_img.0.slug %}'"
+        >
+          <div class="card bg-dark text-white">
+            <img
+              class="card-img"
+              src="{{post_img.0.image.url}}"
+              alt="Card image"
+              height="240"
+            />
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{post_img.0.title}}</h5>
+              <p class="card-text">{{post_img.0.description}}</p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-4 h-auto mt-lg-3"
+          onclick="location.href='{% url 'post_detail' post_img.1.slug %}'"
+        >
+          <div class="card bg-dark text-white">
+            <img
+              class="card-img"
+              src="{{post_img.1.image.url}}"
+              alt="Card image"
+              height="240"
+            />
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{post_img.1.title}}</h5>
+              <p class="card-text">{{post_img.1.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div
+          class="col-md-4 mt-lg-3"
+          onclick="location.href='{% url 'post_detail' post_img.2.slug %}'"
+        >
+          <div class="card bg-dark text-white">
+            <img
+              class="card-img"
+              src="{{post_img.2.image.url}}"
+              alt="Card image"
+              height="240"
+            />
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{post_img.2.title}}</h5>
+              <p class="card-text">{{post_img.2.description}}</p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-5 mt-lg-3"
+          onclick="location.href='{% url 'post_detail' post_img.3.slug %}'"
+        >
+          <div class="card bg-dark text-white">
+            <img
+              class="card-img"
+              src="{{post_img.3.image.url}}"
+              alt="Card image"
+              height="240"
+            />
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{post_img.3.title}}</h5>
+              <p class="card-text">{{post_img.3.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      {% if post_list %} {% for post in post_list %}
+      <div class="row justify-content-lg-end mt-1">
+        <!-- Post Content Column -->
+        <div class="col-md-12 sketchy rounded">
+          <!-- Title -->
+
+          <h2 class="">{{post.title}}</h2>
+
+          <!-- Author -->
+          <p class="lead">{{post.post_date}}</p>
+          {% for tagg in post.tag.all %}
+          <p class="lead">برچسبها: #{{ tagg.tag_name }}</p>
+          {% endfor %}
+          <img class="img-fluid rounded" src="{{post.image.url}}" alt="" />
+          <a href="{% url 'post_detail' post.slug %}">
+            <input
+              type="button"
+              value="بیشتر"
+              class="btn btn-outline-primary mt-1"
+            />
+          </a>
+          <!-- Preview Image -->
+        </div>
+      </div>
+      {% endfor %} {% endif %}
+    </div>
+    <div class="col-md-4">
+      <div class="row sticky-top">
+        <div class="col-md-12 text-justify">
+          <h3>به کافه بلاگ خوش آمدید</h3>
+          <p>
+            نوشتن انگیزه می‌خواهد، و چرا از نوشتن برای تقویت انگیزۀ نوشتن بهره
+            نگیریم. در این صفحه جملات کوتاهی را می‌خوانید که هر یک می‌توانید در
+            گوشه و کنار دفترهای شما، یا دیوار اتاق و صفحۀ زمینۀ موبایل‌تان،
+            اهمیت نوشتن را به شما یادآوری کنند. کافه بلاگ جایی است برای نوشتن،
+            یاد دادن و یاد گرفتن.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  setTimeout(function () {
+    if ($("#msg").length > 0) {
+      $("#msg").fadeOut();
+    }
+  }, 2000); // 2000 millisecond
+</script>
+{% endblock body %}

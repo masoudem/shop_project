@@ -1,0 +1,76 @@
+{% extends 'layout_shop.html' %} {% block body %}
+
+<div id="container" style="width: 75%">
+  <div class="row m-2">
+    <div class="col-md-6">
+      <canvas id="myChart"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="myChart1"></canvas>
+    </div>
+  </div>
+  <div class="row m-2">
+    <div class="col-md-12">
+      <table style="width: 100%;" id="myTable">
+
+      </table>
+    </div>
+  </div>
+</div>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const labels = [
+        {% for item in labels %}
+
+        '{{ item }}',
+
+        {% endfor %}
+    ];
+
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'نمودار تعداد  هر محصول',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: {{ data }},
+      }]
+    };
+    const data1 = {
+      labels: labels,
+      datasets: [{
+        label: 'نمودار قیمت  هر محصول',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: {{ price }},
+      }]
+    };
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {}
+    };
+    const config1 = {
+      type: 'bar',
+      data: data1,
+      options: {}
+    };
+    var table = '<tr><th>' + 'نام' + '</th><th>' + 'تعداد' + '</th></tr>' ;
+    for(var i=0; i<labels.length; i++){
+      table += '<tr><td>' + labels[i] + '</td><td>' + labels[i] + '</td></tr>' ;
+  }
+    $('#myTable').append(table);
+    
+</script>
+<script>
+  const myChart = new Chart(document.getElementById("myChart"), config);
+  const myChart1 = new Chart(document.getElementById("myChart1"), config1);
+</script>
+
+{% endblock body %}
